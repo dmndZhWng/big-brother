@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Big Brother</title>
+</head>
+
+<body>
+
+<div class="d-flex align-items-center flex-column justify-content-center h-100" id="header">
+    <h1 class="display-4">Only for trustful people ... <u>{{localUserName}}</u> !</h1>
+    <form>
+        <div class="form-group">
+            <input class="form-control form-control-lg" placeholder="User" type="text" ng-model="username">
+        </div>
+        <div class="form-group">
+            <input class="form-control form-control-lg" placeholder="Password ?" type="password" ng-model="password">
+        </div>
+
+        <div class="ng-hide" ng-show="username !== '' && isLogging === false">
+            <div class="form-group">
+                <button class="btn btn-outline-warning btn-lg btn-block" ng-click="login(username, password)">
+                    Log In
+                </button>
+            </div>
+        </div>
+        <div class="ng-hide" ng-show="isLogging === true">
+            <div class="form-group">
+                <button class="btn btn btn-outline-dark btn-lg btn-block disabled">
+                    &#9203;
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+
+</html>
