@@ -2,6 +2,7 @@ package com.edmond.cam.auth;
 
 import com.edmond.cam.model.Authority;
 import com.edmond.cam.model.User;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,13 +22,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class UserService implements UserDetailsService {
 
-    private static final String CREDENTIAL_PATH = "/home/pi/Java/credentials.txt";
-
     private static Map<String, UserDetails> CACHE = new ConcurrentHashMap<>();
 
-    public UserService() throws IOException {
+    public UserService(Environment environment) throws IOException {
 
-        List<Credentials> credentials = getCredentialsFromFile();
+        List<Credentials> credentials = getCredentialsFromFile(environment.getProperty("path.credentials"));
         int id = 0;
         for (Credentials credential : credentials) {
             User user = new User(
@@ -44,9 +43,9 @@ public class UserService implements UserDetailsService {
         return CACHE.get(s);
     }
 
-    private static List<Credentials> getCredentialsFromFile() throws IOException, IllegalFormatException {
+    private static List<Credentials> getCredentialsFromFile(String fullPath) throws IOException, IllegalFormatException {
         List<Credentials> credentials = new ArrayList<>();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(CREDENTIAL_PATH))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fullPath))) {
             String line = bufferedReader.readLine();
             String[] users = line.split("=")[1].trim().split(",");
 
