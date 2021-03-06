@@ -1,18 +1,18 @@
 'use strict';
 
 app.factory('surveillanceService', ['$http', function($http) {
-    const surveillanceUrl = '/home';
+    const surveillanceUrl = '/surveillance';
 
-    let takePicturePromise = function(username) {
-        let pictureRequest = {
-            method: 'POST',
-            url: baseUrl + "/surveillance/take-picture" + "?username=" + username
-        };
+    let firePromise = function() {
+        return $http(buildGetRequest(surveillanceUrl + '/fire'));
+    }
 
-        return $http(pictureRequest);
+    let cameraPromise = function() {
+        return $http(buildGetRequest(surveillanceUrl + '/stream'))
     }
 
     return {
-        takePicturePromise: takePicturePromise
+        firePromise: firePromise,
+        cameraPromise: cameraPromise
     }
 }]);

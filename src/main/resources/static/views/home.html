@@ -9,12 +9,11 @@
 
 <body>
 
-<div class="container-fluid" style="width: 70%;">
+<div class="container-fluid" style="width: 80%;">
     <div class="jumbotron vertical-center bg-dark">
-        <div class="container ">
+        <div class="container">
             <div class="text-center">
-                <h6 class="display-4">Welcome {{user}} !</h6>
-                <p class="title">Access level : <i>{{adminRight}} {{userRight}}</i></p>
+                <!--h6 class="display-4">Welcome {{user}} !</h6-->
 
                 <div class="container-fluid" style="width: 30%;">
                     <table class="table table-bordered table-striped table-dark">
@@ -25,54 +24,28 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr style="line-height: 14px;">
-                            <td style="font-size: 26px;">&#127777;</td>
-                            <td>66°C</td>
-                        </tr>
-                        <tr style="line-height: 14px;">
-                            <td style="font-size: 26px;">&#128167;</td>
-                            <td>20%</td>
-                        </tr>
 
                         <!--Fire-->
                         <tr style="line-height: 14px;">
                             <td style="font-size: 26px;">&#128293;</td>
                             <td>{{isFire}}</td>
                         </tr>
-                        <tr style="line-height: 14px;">
-                            <td style="font-size: 26px;">&#128034;</td>
-                            <td>True</td>
-                        </tr>
 
                         </tbody>
                     </table>
-                    <div class="btn-group">
-                        <button class="btn btn-outline-primary" ng-click="refreshSensor()">
-                            Refresh sensor
-                        </button>
-                    </div>
-                    <div class="btn-group">
-                        <div class="ng-hide" ng-show="isTakingPicture === false">
-                            <button class="btn btn-outline-success" ng-click="takePicture()">
-                                Take Picture &#128248;
-                            </button>
-                        </div>
-                        <div class="ng-hide" ng-show="isTakingPicture === true">
-                            <button class="btn btn-outline-dark disabled">
-                                &#9203;
+                    <div class="form-row">
+                        <div class="col">
+                            <button class="btn btn-outline-primary" ng-click="refreshSensor()">
+                                Refresh sensor
                             </button>
                         </div>
                     </div>
+
                     <br>
                 </div>
+                <IFRAME src="/big-brother/surveillance/stream" align="center" width="640" height="480" scrolling="no" frameborder="no"></IFRAME>
             </div>
             <br>
-            <div class="ng-hide" ng-show="currentTs !== ''">
-                <div class="container-fluid" style="width: 30%;">
-                    <p style="line-height:28px">&#9200; @{{currentTs}}</p>
-                    <img class="displayed" width="300" src="data:image/jpeg;base64,{{code64}}">
-                </div>
-            </div>
         </div>
     </div>
 </div>

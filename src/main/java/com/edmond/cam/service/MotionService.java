@@ -1,27 +1,20 @@
-package com.edmond.cam.service.raspberry;
+package com.edmond.cam.service;
 
-import com.pi4j.io.gpio.*;
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalInput;
+import com.pi4j.io.gpio.PinPullResistance;
+import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-
-@Component
 public class MotionService {
 
     private GpioController gpioController;
     private GpioPinDigitalInput input;
 
     public MotionService() {
-    }
-
-    public boolean senseMotion() {
-        return input.getState().equals(PinState.HIGH);
-    }
-
-    @PostConstruct
-    public void init() {
         gpioController = GpioFactory.getInstance();
         input = gpioController.provisionDigitalInputPin(RaspiPin.GPIO_15, PinPullResistance.PULL_DOWN);
         input.setShutdownOptions(true);
@@ -31,5 +24,9 @@ public class MotionService {
                 System.out.println("Motion Pin : " + input.getState());
             }
         });
+    }
+
+    public boolean senseMotion() {
+        return input.getState().equals(PinState.HIGH);
     }
 }
