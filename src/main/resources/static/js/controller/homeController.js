@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('homeController', ['$scope', '$interval', '$sce', 'surveillanceService', function($scope, $interval, $sce, surveillanceService) {
+app.controller('homeController', ['$scope', '$interval', '$sce', 'surveillanceService', 'mechanicService', function($scope, $interval, $sce, surveillanceService, mechanicService) {
 
     $scope.cameraIpAdress = '';
     $scope.isFire = false;
@@ -11,6 +11,17 @@ app.controller('homeController', ['$scope', '$interval', '$sce', 'surveillanceSe
 
     $scope.refreshSensor = function() { // the refresh sensor button
         refreshSensor();
+    }
+
+    $scope.move = function(direction) {
+        let mechanicPromise = mechanicService.movePromise(direction);
+        mechanicPromise.then(
+            function successCallback(response) {                
+            },
+            function errorCallback(response) {
+                console.log(response);
+            }
+        );
     }
 
     function refreshSensor() {
