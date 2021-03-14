@@ -11,12 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class FireService {
 
-    private GpioController gpioController;
-    private GpioPinDigitalInput input;
+    private final GpioPinDigitalInput input;
 
     public FireService() {
-        this.gpioController = GpioFactory.getInstance();
-        this.input = this.gpioController.provisionDigitalInputPin(RaspiPin.GPIO_12, PinPullResistance.PULL_DOWN);
+        GpioController gpioController = GpioFactory.getInstance();
+        this.input = gpioController.provisionDigitalInputPin(RaspiPin.GPIO_12, PinPullResistance.PULL_DOWN);
         this.input.setShutdownOptions(true);
     }
 

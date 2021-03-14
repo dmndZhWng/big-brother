@@ -1,6 +1,7 @@
 package com.edmond.cam.web;
 
 import com.edmond.cam.service.SurveillanceService;
+import com.edmond.cam.util.HttpHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +15,6 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 @RestController
 @RequestMapping(value = "/surveillance")
@@ -22,7 +22,7 @@ public class SurveillanceController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpInterceptorImpl.class);
 
-    private SurveillanceService surveillanceService;
+    private final SurveillanceService surveillanceService;
 
     public SurveillanceController(SurveillanceService surveillanceService) {
         this.surveillanceService = surveillanceService;
@@ -38,9 +38,9 @@ public class SurveillanceController {
 
         try {
             InputStream inputStream = surveillanceService.readStream();
-            HttpHeaders httpHeaders = makeHeader();
+            HttpHeaders httpHeaders = HttpHelper.makeHeader();
             StreamingResponseBody streamingResponseBody = (outputStream) -> {
-                transfer(inputStream, outputStream);
+                HttpHelper.transfer(inputStream, outputStream);
             };
 
             return ResponseEntity
@@ -50,30 +50,7 @@ public class SurveillanceController {
 
         } catch (IOException e) {
             LOGGER.error("Shit happens on the camera ...");
-        }
-
-        return null;
-    }
-
-    private HttpHeaders makeHeader() {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Access-Control", "no-cache, no-store, must-revalidate");
-        headers.add("Age", "0");
-        headers.add("Expires", "0");
-        headers.add("Cache-Control", "no-cache, private");
-        headers.add("Pragma", "no-cache");
-        headers.add("Content-Type", "multipart/x-mixed-replace; boundary=FRAME");
-
-        return headers;
-    }
-
-    private void transfer(InputStream source, OutputStream target) throws IOException {
-        byte[] buf = new byte[2048];
-        int length;
-        while ((length = source.read(buf)) > 0) {
-            target.write(buf, 0, length);
-            target.flush();
+            return null;
         }
     }
 }

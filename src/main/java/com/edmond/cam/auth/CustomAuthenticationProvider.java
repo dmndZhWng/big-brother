@@ -1,5 +1,6 @@
 package com.edmond.cam.auth;
 
+import com.edmond.cam.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,7 +20,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         return new BCryptPasswordEncoder();
     }
 
-    private UserService userService;
+    private final UserService userService;
 
     public CustomAuthenticationProvider(UserService userService) {
         this.userService = userService;

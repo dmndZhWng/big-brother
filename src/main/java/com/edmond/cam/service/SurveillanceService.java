@@ -13,7 +13,7 @@ public class SurveillanceService {
 
     private final String camAddress;
 
-    private FireService fireService;
+    private final FireService fireService;
 
     public SurveillanceService(FireService fireService, Environment environment) {
         this.fireService = fireService;

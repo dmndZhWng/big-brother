@@ -13,22 +13,20 @@ public class WheelService {
 
     private static final int DEFAULT_DURATION = 1;
 
-    private GpioController gpioController;
+    private final GpioPinDigitalOutput leftOutputForward;
+    private final GpioPinDigitalOutput leftOutputBackward;
 
-    private GpioPinDigitalOutput leftOutputForward;
-    private GpioPinDigitalOutput leftOutputBackward;
-
-    private GpioPinDigitalOutput rightOutputForward;
-    private GpioPinDigitalOutput rightOutputBackward;
+    private final GpioPinDigitalOutput rightOutputForward;
+    private final GpioPinDigitalOutput rightOutputBackward;
 
     public WheelService() {
-        this.gpioController = GpioFactory.getInstance();
+        GpioController gpioController = GpioFactory.getInstance();
 
-        this.leftOutputBackward = this.gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_25, PinState.LOW);
-        this.leftOutputForward = this.gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_24, PinState.LOW);
+        this.leftOutputBackward = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_25, PinState.LOW);
+        this.leftOutputForward = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_24, PinState.LOW);
 
-        this.rightOutputBackward = this.gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_27, PinState.LOW);
-        this.rightOutputForward = this.gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_28, PinState.LOW);
+        this.rightOutputBackward = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_27, PinState.LOW);
+        this.rightOutputForward = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_28, PinState.LOW);
 
         this.leftOutputBackward.setShutdownOptions(true, PinState.LOW);
         this.rightOutputBackward.setShutdownOptions(true, PinState.LOW);
@@ -91,6 +89,7 @@ public class WheelService {
         try {
             Thread.sleep(second * 1000);
         } catch (InterruptedException e) {
+            // ignore ...
         }
     }
 

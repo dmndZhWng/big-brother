@@ -11,11 +11,10 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 public class MotionService {
 
-    private GpioController gpioController;
-    private GpioPinDigitalInput input;
+    private final GpioPinDigitalInput input;
 
     public MotionService() {
-        gpioController = GpioFactory.getInstance();
+        GpioController gpioController = GpioFactory.getInstance();
         input = gpioController.provisionDigitalInputPin(RaspiPin.GPIO_15, PinPullResistance.PULL_DOWN);
         input.setShutdownOptions(true);
         input.addListener(new GpioPinListenerDigital() {
