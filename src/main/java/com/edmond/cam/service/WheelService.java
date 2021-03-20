@@ -57,14 +57,14 @@ public class WheelService {
 
     private void left(int second) {
         this.clearState();
-        this.rightOutputForward.high();
+        this.leftOutputForward.high();
         this.sleep(second);
         this.clearState();
     }
 
     private void right(int second) {
         this.clearState();
-        this.leftOutputForward.high();
+        this.rightOutputForward.high();
         this.sleep(second);
         this.clearState();
     }
