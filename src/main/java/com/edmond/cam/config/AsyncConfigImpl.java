@@ -13,7 +13,6 @@ public class AsyncConfigImpl implements AsyncConfigurer {
 
     @Override
     public Executor getAsyncExecutor() {
-        Executor executor = new SimpleAsyncTaskExecutor();
         return new SimpleAsyncTaskExecutor();
     }
 }
